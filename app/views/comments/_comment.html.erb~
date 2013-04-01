@@ -7,3 +7,13 @@
   <b>Comment:</b>
   <%= comment.body %>
 </p>
+
+<p>
+	<b>Destroy</b>
+	<%= check_box_tag "blog_posts[]", comment.id %>
+
+<p>
+  <%= link_to 'Destroy Comment', [comment.post, comment],
+               :confirm => 'Are you sure?',
+               :method => :delete %>
+</p>

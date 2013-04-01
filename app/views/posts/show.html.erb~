@@ -6,6 +6,11 @@
 </p>
 
 <p>
+  <b>Email:</b>
+  <%= @post.email %>
+</p>
+
+<p>
   <b>Title:</b>
   <%= @post.title %>
 </p>
@@ -17,16 +22,21 @@
 
 <p>
   <b>Tags:</b>
-  <%= @post.tags.map { |t| t.name }.join(", ") %>
+  <%= join_tags(@post) %>
 </p>
 
 <h2>Comments</h2>
+<%= form_tag destroy_multiple_posts_path, method: :delete do %>
 <%= render @post.comments %>
 
-<h2>Add a comment:</h2>
-<%= render "comments/form" %>
-
+<% if @post.closed %>
+	<h2>Post is closed</h2>
+<% else %>
+	<h2>Add a comment:</h2>
+	<%= render "comments/form" %>
+<% end %>
 <br />
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<%= link_to 'Back', posts_path %> |
+<%= link_to 'Close', close_post_path, :method => :put%>

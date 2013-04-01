@@ -83,4 +83,33 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # CLOSE /posts/1/close
+  # CLOSE /posts/1/close
+	def close
+    @post = Post.find(params[:id])
+    @post.closed = true
+
+    respond_to do |format|
+      if @post.update_attributes(params[:post])
+        format.html { redirect_to @post, notice: 'Post was closed' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "show" }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+	def destroy_multiple
+
+		Comment.destroy(params[:comments])
+
+		respond_to do |format|
+		  format.html { redirect_to :back, notice: 'Comments destroyed.' }
+      format.json { head :no_content  }
+		end
+
+	end
+
 end

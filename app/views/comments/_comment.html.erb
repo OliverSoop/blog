@@ -9,6 +9,10 @@
 </p>
 
 <p>
+	<b>Destroy</b>
+	<%= check_box_tag "comments[]", comment.id %>
+
+<p>
   <%= link_to 'Destroy Comment', [comment.post, comment],
                :confirm => 'Are you sure?',
                :method => :delete %>

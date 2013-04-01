@@ -1,5 +1,11 @@
 Blog::Application.routes.draw do
   resources :posts do
+		member do
+			put 'close'
+		end
+		collection do
+      delete 'destroy_multiple'
+    end
 		resources :comments
 	end
 

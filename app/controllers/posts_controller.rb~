@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 
-	http_basic_authenticate_with :name => "dhh", :password => "secret", :except => [:index, :show]
+	http_basic_authenticate_with :name => "User", :password => "secret", :except => [:index, :show]
  
   # GET /posts
   # GET /posts.json
@@ -83,4 +83,33 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # CLOSE /posts/1/close
+  # CLOSE /posts/1/close
+	def close
+    @post = Post.find(params[:id])
+    @post.closed = true
+
+    respond_to do |format|
+      if @post.update_attributes(params[:post])
+        format.html { redirect_to @post, notice: 'Post was closed' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "show" }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+	def destroy_multiple
+
+		Comment.destroy(params[:comments])
+
+		respond_to do |format|
+		  format.html { redirect_to @post, notice: 'Comments destroyed.' }
+      format.json { render json: @post, status: :destroyed, location: @post }
+		end
+
+	end
+
 end
